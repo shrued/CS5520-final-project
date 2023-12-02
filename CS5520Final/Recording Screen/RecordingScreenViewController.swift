@@ -46,7 +46,6 @@ class RecordingScreenViewController: UIViewController {
         }
     }
     
-    
     //MARK: logic to add recording info to Firestore...
     func saveRecordingInfoToFireStore(recordingInfo: RecordingInfo) {
         if let userEmail = currentUser!.email{
