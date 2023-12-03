@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import Charts //import Charts library
 
 class OverviewScreenView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    var labelOverview: UILabel!
+    var buttonProfile: UIButton!
+    var labelCurrentWeight: UILabel!
+    var textFieldweightChanges: UITextField!
+    var buttonSave: UIButton!
+    var chartViewProgress:
+    
+    
 }
