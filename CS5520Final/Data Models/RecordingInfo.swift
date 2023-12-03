@@ -4,16 +4,19 @@ import FirebaseFirestoreSwift
 struct RecordingInfo: Codable {
     @DocumentID var id: String?
     var foodName: String
-    var caloriesAmount: String
-    var sugarAmount: String
-    var sodiumAmount: String
-    var waterAmount: String
+    var date: Date
+    var caloriesAmount: Double
+    var sugarAmount: Double
+    var sodiumAmount: Double
+    var waterAmount: Double
     
-    init(foodName: String, caloriesAmount: String, sugarAmount: String, sodiumAmount: String, waterAmount: String) {
+    init(foodName: String, date: Date = Date(), caloriesAmount: Double, sugarAmount: Double, sodiumAmount: Double, waterAmount: Double) {
         self.foodName = foodName
         self.caloriesAmount = caloriesAmount
         self.sugarAmount = sugarAmount
         self.sodiumAmount = sodiumAmount
         self.waterAmount = waterAmount
+        self.date = date
     }
 }
+

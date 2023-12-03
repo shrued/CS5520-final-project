@@ -1,10 +1,5 @@
 //
 //  RecordingScreenViewController.swift
-//  CS5520Final
-//
-//  Created by Hanru Chen on 12/2/23.
-//
-
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
@@ -28,47 +23,52 @@ class RecordingScreenViewController: UIViewController {
 
     //MARK: save button action tapped...
     @objc func onSaveButtonTapped() {
-        let caloriesFoodName = recordingScreen.textFieldFoodName.text
-        let caloriesAmount = recordingScreen.textFieldFoodAmount.text
-        let sugarAmount = recordingScreen.textFieldSugarAmount.text
-        let sodiumAmount = recordingScreen.textFieldSodiumAmount.text
-        let waterAmount = recordingScreen.textFieldWaterAmount.text
-        
-        if caloriesFoodName == "" || caloriesAmount == "" || sugarAmount == "" || sodiumAmount == "" || waterAmount == "" {
-            
-            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            present(alert, animated: true)
-        } else {
-            let recordingInfo = RecordingInfo(foodName: caloriesFoodName!, caloriesAmount: caloriesAmount!, sugarAmount: sugarAmount!, sodiumAmount: sodiumAmount!, waterAmount: waterAmount!)
-            
-            saveRecordingInfoToFireStore(recordingInfo: recordingInfo)
+        guard let caloriesFoodName = recordingScreen.textFieldFoodName.text,
+              let caloriesAmountStr = recordingScreen.textFieldFoodAmount.text,
+              let sugarAmountStr = recordingScreen.textFieldSugarAmount.text,
+              let sodiumAmountStr = recordingScreen.textFieldSodiumAmount.text,
+              let waterAmountStr = recordingScreen.textFieldWaterAmount.text,
+              let caloriesAmount = Double(caloriesAmountStr),
+              let sugarAmount = Double(sugarAmountStr),
+              let sodiumAmount = Double(sodiumAmountStr),
+              let waterAmount = Double(waterAmountStr) else {
+            presentAlert(title: "Error", message: "Please enter all fields correctly")
+            return
         }
+
+        let recordingInfo = RecordingInfo(foodName: caloriesFoodName, caloriesAmount: caloriesAmount, sugarAmount: sugarAmount, sodiumAmount: sodiumAmount, waterAmount: waterAmount)
+        saveRecordingInfoToFireStore(recordingInfo: recordingInfo)
     }
+    
+    func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alert, animated: true)
+    }
+    
     
     //MARK: logic to add recording info to Firestore...
     func saveRecordingInfoToFireStore(recordingInfo: RecordingInfo) {
-        if let userEmail = currentUser!.email{
-            let collectionRecInfo = database
-                .collection("users")
-                .document(userEmail)
-                .collection("recordingInfo")
-            
-            showActivityIndicator()
-            
-            do{
-                try collectionRecInfo.addDocument(from: recordingInfo, completion: {(error) in
-                    if error == nil{
-                        self.hideActivityIndicator()
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                })
-            }catch {
-                // show error message
-                let alert = UIAlertController(title: "Error", message: "Unable to save recording info", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-                present(alert, animated: true)
+        guard let userEmail = currentUser?.email else {
+            presentAlert(title: "Error", message: "User not logged in")
+            return
+        }
+
+        let collectionRecInfo = database.collection("users").document(userEmail).collection("recordingInfo")
+        showActivityIndicator()
+        
+        do {
+            try collectionRecInfo.addDocument(from: recordingInfo) { error in
+                self.hideActivityIndicator()
+                if let error = error {
+                    self.presentAlert(title: "Error", message: "Unable to save recording info: \(error.localizedDescription)")
+                } else {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
+        } catch {
+            hideActivityIndicator()
+            presentAlert(title: "Error", message: "An error occurred while saving")
         }
     }
 }
