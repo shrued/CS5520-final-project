@@ -13,6 +13,7 @@ class OverviewScreenView: UIView {
     var labelOverview: UILabel!
     var buttonProfile: UIButton!
     var labelCurrentWeight: UILabel!
+    var labelCurrentWeightValue: UILabel!
     var textFieldWeightChanges: UITextField!
     var buttonUpdate: UIButton!
     var chartViewProgress: LineChartView!
@@ -29,6 +30,7 @@ class OverviewScreenView: UIView {
         setupButtonUpdate()
         setupChartViewProgress()
         setupChartViewIntakes()
+        setupLabelCurrentWeightValue()
         
         initConstraints()
     }
@@ -72,6 +74,20 @@ class OverviewScreenView: UIView {
         labelCurrentWeight.font = UIFont.systemFont(ofSize: 18)
         labelCurrentWeight.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(labelCurrentWeight)
+    }
+    
+    func setupLabelCurrentWeightValue() {
+        labelCurrentWeightValue = UILabel()
+        labelCurrentWeightValue.textColor = .black
+        labelCurrentWeightValue.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        labelCurrentWeightValue.textAlignment = .right
+        labelCurrentWeightValue.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(labelCurrentWeightValue)
+    }
+    
+    func setCurrentWeight(_ weight: Double) {
+        labelCurrentWeightValue.text = "\(weight) lbs"
+        // "\(weight) lbs"
     }
     
     // MARK: setup text field weight changes...
@@ -124,7 +140,10 @@ class OverviewScreenView: UIView {
             
             labelCurrentWeight.topAnchor.constraint(equalTo: buttonProfile.bottomAnchor, constant: 20),
             labelCurrentWeight.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            labelCurrentWeight.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            
+            labelCurrentWeightValue.centerYAnchor.constraint(equalTo: labelCurrentWeight.centerYAnchor),
+            labelCurrentWeightValue.leadingAnchor.constraint(greaterThanOrEqualTo: labelCurrentWeight.trailingAnchor, constant: 10),
+            labelCurrentWeightValue.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             textFieldWeightChanges.topAnchor.constraint(equalTo: labelCurrentWeight.bottomAnchor, constant: 10),
             textFieldWeightChanges.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
