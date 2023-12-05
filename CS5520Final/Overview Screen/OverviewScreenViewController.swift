@@ -27,6 +27,8 @@ class OverviewScreenViewController: UIViewController {
     
     @objc func profileButtonTapped() {
         // navigate to Profile Screen
+        let profileController = ProfileScreenViewController()
+        navigationController?.pushViewController(profileController, animated: true)
     }
     
     @objc func saveWeightButtonTapped() {

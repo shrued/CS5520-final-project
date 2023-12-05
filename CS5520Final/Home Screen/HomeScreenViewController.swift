@@ -19,6 +19,8 @@ class HomeScreenViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Home Page"
+        
+        
         homeScreen.OverviewButton.addTarget(self, action: #selector(onButtonOverviewTapped),
                                 for: .touchUpInside)
         homeScreen.RecordButton.addTarget(self, action: #selector(onButtonRecordingTapped),
