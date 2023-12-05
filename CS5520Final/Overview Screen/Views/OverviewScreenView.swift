@@ -81,6 +81,7 @@ class OverviewScreenView: UIView {
         labelCurrentWeightValue.textColor = .black
         labelCurrentWeightValue.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         labelCurrentWeightValue.textAlignment = .right
+        labelCurrentWeightValue.text = "0 lbs" //default
         labelCurrentWeightValue.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(labelCurrentWeightValue)
     }

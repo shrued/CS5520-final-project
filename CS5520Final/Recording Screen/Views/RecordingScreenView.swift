@@ -20,6 +20,7 @@ class RecordingScreenView: UIView {
     var labelWater: UILabel!
     var textFieldWaterAmount: UITextField!
     var buttonSave: UIButton!
+    var gradientLayer: CAGradientLayer!
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -43,7 +44,7 @@ class RecordingScreenView: UIView {
     }
     
     func setupGradientBackground() {
-        let gradientLayer = CAGradientLayer()
+        gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor(red: 0.56, green: 0.74, blue: 0.56, alpha: 1.00).cgColor, // Soft green
             UIColor(red: 0.67, green: 0.84, blue: 0.90, alpha: 1.00).cgColor  // Soft blue
@@ -245,21 +246,7 @@ class RecordingScreenView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        setupGradientBackground()
-        setuplabelTitle()
-        setuplabelAdd()
-        setuplabelCalories()
-        setuptextFieldFoodName()
-        setuptextFieldFoodAmount()
-        setuplabelSugar()
-        setuptextFieldSugarAmount()
-        setuplabelSodium()
-        setuptextFieldSodiumAmount()
-        setuplabelWater()
-        setuptextFieldWaterAmount()
-        setupbuttonSave()
-        initConstraints()
+        gradientLayer.frame = self.bounds
     }
     
     required init?(coder: NSCoder) {
