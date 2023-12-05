@@ -50,8 +50,16 @@ class OverviewScreenView: UIView {
     // MARK: setup button profile...
     func setupButtonProfile() {
         buttonProfile = UIButton(type: .system)
-        let image = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysOriginal)
-        buttonProfile.setImage(image, for: .normal)
+
+        // Create a configuration for the button
+        var config = UIButton.Configuration.plain()
+        config.title = "Profile"
+        config.image = UIImage(systemName: "person.circle")
+        config.imagePlacement = .top  // Place image above the title
+        config.imagePadding = 8       // Padding between the image and the title
+
+        // Apply the configuration to the button
+        buttonProfile.configuration = config
         buttonProfile.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonProfile)
     }
@@ -111,8 +119,8 @@ class OverviewScreenView: UIView {
             labelOverview.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
             labelOverview.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
+            buttonProfile.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             buttonProfile.topAnchor.constraint(equalTo: labelOverview.bottomAnchor, constant: 10),
-            buttonProfile.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             labelCurrentWeight.topAnchor.constraint(equalTo: buttonProfile.bottomAnchor, constant: 20),
             labelCurrentWeight.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
