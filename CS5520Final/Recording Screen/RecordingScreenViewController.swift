@@ -32,7 +32,7 @@ class RecordingScreenViewController: UIViewController {
               let sugarAmount = Double(sugarAmountStr),
               let sodiumAmount = Double(sodiumAmountStr),
               let waterAmount = Double(waterAmountStr) else {
-            presentAlert(title: "Error", message: "Please enter all fields correctly")
+            self.presentAlert(title: "Error", message: "Please enter all fields correctly")
             return
         }
 

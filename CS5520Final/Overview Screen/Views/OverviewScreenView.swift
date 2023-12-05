@@ -102,7 +102,7 @@ class OverviewScreenView: UIView {
         chartViewIntakes.noDataText = "No intake data available"
         chartViewIntakes.chartDescription.enabled = false
         chartViewIntakes.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(charViewIntakes)
+        self.addSubview(chartViewIntakes)
     }
     
     // MARK: Init constraints...
@@ -137,22 +137,5 @@ class OverviewScreenView: UIView {
             chartViewIntakes.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             chartViewIntakes.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2)
         ])
-    }
-    
-    // MARK: Update chart data...
-    func updateIntakeChartData(calories: Double, sugar: Double, sodium: Double, water: Double) {
-        let dataSet = BarChartDataSet(entries: [
-            BarChartDataEntry(x: 1, y: calories),
-            BarChartDataEntry(x: 2, y: sugar),
-            BarChartDataEntry(x: 3, y: sodium),
-            BarChartDataEntry(x: 4, y: water)
-        ], label: "Daily Intake")
-        
-        dataSet.colors = [NSUIColor.systemBlue]
-        
-        let data = BarChartData(dataSet: dataSet)
-        chartViewIntakes.data = data
-        
-        chartViewIntakes.notifyDataSetChanged()
     }
 }
