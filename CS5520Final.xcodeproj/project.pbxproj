@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF6942E12B1EA2AE0041D2F6 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E02B1EA2AE0041D2F6 /* HomeScreenView.swift */; };
+		DF6942E32B1ECC350041D2F6 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E22B1ECC350041D2F6 /* HomeScreenViewController.swift */; };
+		DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */; };
+		DF6942E92B1EDD620041D2F6 /* ProfileScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */; };
+		DF6942EB2B1EE1970041D2F6 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */; };
 		E4A70DE02B1BAC8F001B65C1 /* RecordingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */; };
 		E4A70DE22B1BACA1001B65C1 /* RecordingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */; };
 		E4A70DE42B1BACD4001B65C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4A70DE32B1BACD4001B65C1 /* FirebaseAnalytics */; };
@@ -62,6 +67,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DF6942E02B1EA2AE0041D2F6 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
+		DF6942E22B1ECC350041D2F6 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
+		DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
+		DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenViewController.swift; sourceTree = "<group>"; };
+		DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenView.swift; sourceTree = "<group>"; };
 		E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenViewController.swift; sourceTree = "<group>"; };
 		E4A70E232B1BC6F1001B65C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -129,6 +139,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF6942DE2B1EA2890041D2F6 /* Home Screen */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942E22B1ECC350041D2F6 /* HomeScreenViewController.swift */,
+				DF6942DF2B1EA2940041D2F6 /* Views */,
+			);
+			path = "Home Screen";
+			sourceTree = "<group>";
+		};
+		DF6942DF2B1EA2940041D2F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942E02B1EA2AE0041D2F6 /* HomeScreenView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DF6942E42B1ED59E0041D2F6 /* Profile Screen */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942E52B1ED5A90041D2F6 /* Views */,
+				DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */,
+			);
+			path = "Profile Screen";
+			sourceTree = "<group>";
+		};
+		DF6942E52B1ED5A90041D2F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E4A70DDD2B1BAC61001B65C1 /* Recording Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				E4A70E262B1BD0DA001B65C1 /* RecordingInfo.swift */,
+				DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -199,13 +244,15 @@
 		FA9519652B1A9EA900FDFD42 /* CS5520Final */ = {
 			isa = PBXGroup;
 			children = (
+				DF6942E42B1ED59E0041D2F6 /* Profile Screen */,
+				DF6942DE2B1EA2890041D2F6 /* Home Screen */,
 				E4A70E2D2B1BE2C9001B65C1 /* Overview Screen */,
 				E4A70E282B1BD16E001B65C1 /* Progress Indicator */,
 				E4A70E252B1BD0B8001B65C1 /* Data Models */,
 				E4A70DDD2B1BAC61001B65C1 /* Recording Screen */,
 				FA9519662B1A9EA900FDFD42 /* AppDelegate.swift */,
-				FA9519682B1A9EA900FDFD42 /* SceneDelegate.swift */,
 				FA95196A2B1A9EA900FDFD42 /* ViewController.swift */,
+				FA9519682B1A9EA900FDFD42 /* SceneDelegate.swift */,
 				FA95196C2B1A9EA900FDFD42 /* Main.storyboard */,
 				FA95196F2B1A9EAA00FDFD42 /* Assets.xcassets */,
 				FA9519712B1A9EAA00FDFD42 /* LaunchScreen.storyboard */,
@@ -331,13 +378,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6942EB2B1EE1970041D2F6 /* ProfileInfo.swift in Sources */,
 				E4A70DE22B1BACA1001B65C1 /* RecordingScreenViewController.swift in Sources */,
 				E4A70DE02B1BAC8F001B65C1 /* RecordingScreenView.swift in Sources */,
 				FA95196B2B1A9EA900FDFD42 /* ViewController.swift in Sources */,
 				FA9519672B1A9EA900FDFD42 /* AppDelegate.swift in Sources */,
+				DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */,
 				FA9519692B1A9EA900FDFD42 /* SceneDelegate.swift in Sources */,
+				DF6942E32B1ECC350041D2F6 /* HomeScreenViewController.swift in Sources */,
 				E4A70E2A2B1BD18F001B65C1 /* ProgressSpinnerViewController.swift in Sources */,
+				DF6942E92B1EDD620041D2F6 /* ProfileScreenViewController.swift in Sources */,
 				E4A70E272B1BD0DA001B65C1 /* RecordingInfo.swift in Sources */,
+				DF6942E12B1EA2AE0041D2F6 /* HomeScreenView.swift in Sources */,
 				E4A70E322B1BE320001B65C1 /* OverviewScreenViewController.swift in Sources */,
 				E4A70E302B1BE2F4001B65C1 /* OverviewScreenView.swift in Sources */,
 				E4A70E2C2B1BD1A9001B65C1 /* ProgressSpinnerDelegate.swift in Sources */,
