@@ -12,6 +12,8 @@
 		DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */; };
 		DF6942E92B1EDD620041D2F6 /* ProfileScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */; };
 		DF6942EB2B1EE1970041D2F6 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */; };
+		DF6942EF2B1FA69F0041D2F6 /* EditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942EE2B1FA69F0041D2F6 /* EditScreenView.swift */; };
+		DF6942F12B1FA6B30041D2F6 /* EditScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942F02B1FA6B30041D2F6 /* EditScreenViewController.swift */; };
 		E4A70DE02B1BAC8F001B65C1 /* RecordingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */; };
 		E4A70DE22B1BACA1001B65C1 /* RecordingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */; };
 		E4A70DE42B1BACD4001B65C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4A70DE32B1BACD4001B65C1 /* FirebaseAnalytics */; };
@@ -72,6 +74,8 @@
 		DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenView.swift; sourceTree = "<group>"; };
 		DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenViewController.swift; sourceTree = "<group>"; };
 		DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
+		DF6942EE2B1FA69F0041D2F6 /* EditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenView.swift; sourceTree = "<group>"; };
+		DF6942F02B1FA6B30041D2F6 /* EditScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenViewController.swift; sourceTree = "<group>"; };
 		E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenView.swift; sourceTree = "<group>"; };
 		E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenViewController.swift; sourceTree = "<group>"; };
 		E4A70E232B1BC6F1001B65C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -159,8 +163,8 @@
 		DF6942E42B1ED59E0041D2F6 /* Profile Screen */ = {
 			isa = PBXGroup;
 			children = (
-				DF6942E52B1ED5A90041D2F6 /* Views */,
 				DF6942E82B1EDD620041D2F6 /* ProfileScreenViewController.swift */,
+				DF6942E52B1ED5A90041D2F6 /* Views */,
 			);
 			path = "Profile Screen";
 			sourceTree = "<group>";
@@ -169,6 +173,23 @@
 			isa = PBXGroup;
 			children = (
 				DF6942E62B1ED5C40041D2F6 /* ProfileScreenView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DF6942EC2B1FA6790041D2F6 /* Edit Profile Screen */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942F02B1FA6B30041D2F6 /* EditScreenViewController.swift */,
+				DF6942ED2B1FA6860041D2F6 /* Views */,
+			);
+			path = "Edit Profile Screen";
+			sourceTree = "<group>";
+		};
+		DF6942ED2B1FA6860041D2F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DF6942EE2B1FA69F0041D2F6 /* EditScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,6 +265,7 @@
 		FA9519652B1A9EA900FDFD42 /* CS5520Final */ = {
 			isa = PBXGroup;
 			children = (
+				DF6942EC2B1FA6790041D2F6 /* Edit Profile Screen */,
 				DF6942E42B1ED59E0041D2F6 /* Profile Screen */,
 				DF6942DE2B1EA2890041D2F6 /* Home Screen */,
 				E4A70E2D2B1BE2C9001B65C1 /* Overview Screen */,
@@ -378,6 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6942EF2B1FA69F0041D2F6 /* EditScreenView.swift in Sources */,
 				DF6942EB2B1EE1970041D2F6 /* ProfileInfo.swift in Sources */,
 				E4A70DE22B1BACA1001B65C1 /* RecordingScreenViewController.swift in Sources */,
 				E4A70DE02B1BAC8F001B65C1 /* RecordingScreenView.swift in Sources */,
@@ -385,6 +408,7 @@
 				FA9519672B1A9EA900FDFD42 /* AppDelegate.swift in Sources */,
 				DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */,
 				FA9519692B1A9EA900FDFD42 /* SceneDelegate.swift in Sources */,
+				DF6942F12B1FA6B30041D2F6 /* EditScreenViewController.swift in Sources */,
 				DF6942E32B1ECC350041D2F6 /* HomeScreenViewController.swift in Sources */,
 				E4A70E2A2B1BD18F001B65C1 /* ProgressSpinnerViewController.swift in Sources */,
 				DF6942E92B1EDD620041D2F6 /* ProfileScreenViewController.swift in Sources */,
