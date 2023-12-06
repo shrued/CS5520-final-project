@@ -16,8 +16,9 @@ class OverviewScreenView: UIView {
     var labelCurrentWeightValue: UILabel!
     var textFieldWeightChanges: UITextField!
     var buttonUpdate: UIButton!
-    var chartViewProgress: LineChartView!
     var chartViewIntakes: BarChartView!
+    var weightProgressBar: UIProgressView!
+    var progressBarLabel: UILabel!
 
     var gradientLayer: CAGradientLayer!
     
@@ -30,11 +31,11 @@ class OverviewScreenView: UIView {
         setupLabelCurrentWeight()
         setupTextFieldWeightChanges()
         setupButtonUpdate()
-        setupChartViewProgress()
         setupChartViewIntakes()
         setupLabelCurrentWeightValue()
-        
+        setupWeightProgressBar()
         setupGradientBackground()
+        setupProgressBarLabel()
         initConstraints()
     }
     
@@ -104,7 +105,7 @@ class OverviewScreenView: UIView {
     
     func setCurrentWeight(_ weight: Double) {
         labelCurrentWeightValue.text = "\(weight) lbs"
-        // "\(weight) lbs"
+
     }
     
     // MARK: setup text field weight changes...
@@ -130,13 +131,26 @@ class OverviewScreenView: UIView {
     }
 
     
-    // MARK: setup chart view progress...
-    func setupChartViewProgress() {
-        chartViewProgress = LineChartView()
-        chartViewProgress.noDataText = "No data available"
-        styleChart(chartViewProgress)
-        chartViewProgress.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(chartViewProgress)
+    // MARK: setup bar view for progress
+    func setupWeightProgressBar() {
+        weightProgressBar = UIProgressView(progressViewStyle: .bar)
+        weightProgressBar.trackTintColor = UIColor.lightGray
+        weightProgressBar.progressTintColor = UIColor.systemGreen
+        weightProgressBar.setProgress(0.5, animated: true) // Set this based on user's progress
+        weightProgressBar.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(weightProgressBar)
+    }
+    
+    // MARK: setup label for progress bar
+    func setupProgressBarLabel() {
+        // 2. Initialize the UILabel
+        progressBarLabel = UILabel()
+        progressBarLabel.text = "Progress Bar" // Set the text for the label
+        progressBarLabel.textColor = .black
+        progressBarLabel.textAlignment = .center // Center the text
+        progressBarLabel.font = UIFont.systemFont(ofSize: 16) // Set the font size
+        progressBarLabel.translatesAutoresizingMaskIntoConstraints = false // Enable Auto Layout
+        self.addSubview(progressBarLabel)
     }
     
     // MARK: setup stack view intake labels...
@@ -167,30 +181,35 @@ class OverviewScreenView: UIView {
             buttonProfile.topAnchor.constraint(equalTo: labelOverview.bottomAnchor, constant: 10),
             
             labelCurrentWeight.topAnchor.constraint(equalTo: buttonProfile.bottomAnchor, constant: 20),
-            labelCurrentWeight.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            labelCurrentWeight.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             
             labelCurrentWeightValue.centerYAnchor.constraint(equalTo: labelCurrentWeight.centerYAnchor),
             labelCurrentWeightValue.leadingAnchor.constraint(greaterThanOrEqualTo: labelCurrentWeight.trailingAnchor, constant: 10),
-            labelCurrentWeightValue.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            labelCurrentWeightValue.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
             textFieldWeightChanges.topAnchor.constraint(equalTo: labelCurrentWeight.bottomAnchor, constant: 10),
-            textFieldWeightChanges.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            textFieldWeightChanges.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             textFieldWeightChanges.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.6),
             
             buttonUpdate.centerYAnchor.constraint(equalTo: textFieldWeightChanges.centerYAnchor),
             buttonUpdate.leadingAnchor.constraint(equalTo: textFieldWeightChanges.trailingAnchor, constant: 10),
-            buttonUpdate.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            buttonUpdate.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             buttonUpdate.heightAnchor.constraint(equalToConstant: 40),
             
-            chartViewProgress.topAnchor.constraint(equalTo: textFieldWeightChanges.bottomAnchor, constant: 20),
-            chartViewProgress.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            chartViewProgress.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            chartViewProgress.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.3),
+            weightProgressBar.topAnchor.constraint(equalTo: buttonUpdate.bottomAnchor, constant: 70),
+            weightProgressBar.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            weightProgressBar.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+
+            progressBarLabel.topAnchor.constraint(equalTo: weightProgressBar.bottomAnchor, constant: 8),
+            progressBarLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            progressBarLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            progressBarLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            chartViewIntakes.topAnchor.constraint(equalTo: chartViewProgress.bottomAnchor, constant: 20),
-            chartViewIntakes.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            chartViewIntakes.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            chartViewIntakes.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2)
+
+            chartViewIntakes.topAnchor.constraint(equalTo: progressBarLabel.bottomAnchor, constant: 80),
+            chartViewIntakes.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            chartViewIntakes.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            chartViewIntakes.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
         ])
     }
     
