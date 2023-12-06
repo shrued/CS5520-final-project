@@ -21,10 +21,13 @@ class ProfileScreenView: UIView {
     var orLabel: UILabel!
     var logoutButton: UIButton!
     
+    var gradientLayer: CAGradientLayer!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         
+        setupGradientBackground()
         setupprofileImage()
         setupnameLabel()
         setupageLabel()
@@ -34,9 +37,20 @@ class ProfileScreenView: UIView {
         setupgoalLabel()
         setuporLabel()
         setupEditButton()
-        setuplogoutButton()
+        setupLogoutButton()
         
         initConstraints()
+    }
+    
+    func setupGradientBackground() {
+        gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor(red: 0.67, green: 0.88, blue: 0.69, alpha: 1.00).cgColor, // Warm Green
+            UIColor(red: 0.98, green: 0.89, blue: 0.49, alpha: 1.00).cgColor  // Warm Yellow
+        ]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.bounds
+        self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func setupprofileImage() {
@@ -52,7 +66,7 @@ class ProfileScreenView: UIView {
     func setupnameLabel() {
         nameLabel = UILabel()
         nameLabel.text = "name: USERNAME"
-        nameLabel.font = .systemFont(ofSize: 20)
+        nameLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(nameLabel)
     }
@@ -60,7 +74,7 @@ class ProfileScreenView: UIView {
     func setupageLabel() {
         ageLabel = UILabel()
         ageLabel.text = "age: AGE"
-        ageLabel.font = .systemFont(ofSize: 20)
+        ageLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         ageLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(ageLabel)
     }
@@ -68,7 +82,7 @@ class ProfileScreenView: UIView {
     func setupgenderLabel() {
         genderLabel = UILabel()
         genderLabel.text = "gender: GENDER"
-        genderLabel.font = .systemFont(ofSize: 20)
+        genderLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         genderLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(genderLabel)
     }
@@ -76,7 +90,7 @@ class ProfileScreenView: UIView {
     func setupweightLabel() {
         weightLabel = UILabel()
         weightLabel.text = "weight: WEIGHT"
-        weightLabel.font = .systemFont(ofSize: 20)
+        weightLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         weightLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(weightLabel)
     }
@@ -84,7 +98,7 @@ class ProfileScreenView: UIView {
     func setupheightLabel() {
         heightLabel = UILabel()
         heightLabel.text = "height: HEIGHT"
-        heightLabel.font = .systemFont(ofSize: 20)
+        heightLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         heightLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(heightLabel)
     }
@@ -92,7 +106,7 @@ class ProfileScreenView: UIView {
     func setupgoalLabel() {
         goalLabel = UILabel()
         goalLabel.text = "goal weight: GOAL WEIGHT"
-        goalLabel.font = .systemFont(ofSize: 20)
+        goalLabel.font = UIFont(name: "Noteworthy-Light", size: 20)
         goalLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(goalLabel)
     }
@@ -101,10 +115,13 @@ class ProfileScreenView: UIView {
         editButton = UIButton(type: .system)
         editButton.setTitle("Edit Profile", for: .normal)
         editButton.setTitleColor(.white, for: .normal)
-        editButton.titleLabel!.font = .systemFont(ofSize: 25.0, weight: .bold)
-        editButton.backgroundColor = .gray
-        editButton.frame = CGRect(x: 100, y: 100, width: 150, height: 50)
+        editButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        editButton.backgroundColor = UIColor(red: 0.50, green: 0.80, blue: 0.64, alpha: 1.00) // Soft Green
         editButton.layer.cornerRadius = 10
+        editButton.layer.shadowColor = UIColor.darkGray.cgColor
+        editButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        editButton.layer.shadowOpacity = 0.5
+        editButton.layer.shadowRadius = 2
         editButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(editButton)
     }
@@ -117,10 +134,11 @@ class ProfileScreenView: UIView {
         self.addSubview(orLabel)
     }
     
-    func setuplogoutButton() {
+    func setupLogoutButton() {
         logoutButton = UIButton(type: .system)
-        logoutButton.setTitle("log out", for: .normal)
-        logoutButton.titleLabel!.font = .systemFont(ofSize: 20.0, weight: .bold)
+        logoutButton.setTitle("Log Out", for: .normal)
+        logoutButton.titleLabel!.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        logoutButton.setTitleColor(UIColor.systemRed, for: .normal)
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(logoutButton)
     }
@@ -164,5 +182,9 @@ class ProfileScreenView: UIView {
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
     }
 }
