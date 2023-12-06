@@ -83,7 +83,7 @@ class OverviewScreenViewController: UIViewController {
             if let document = document, document.exists {
                 let profileData = try? document.data(as: ProfileInfo.self)
                 if let profileData = profileData {
-                    self.updateProgressbar(currentWeight: profileData.weight, goalWeight: profileData.goalWeight) // MARK: suppose goalweight
+                    self.updateProgressBar(currentWeight: profileData.weight, goalWeight: profileData.goal) // MARK: suppose goalweight
                 }
             } else {
                 self.presentAlert(title: "Error", message: "Document does not exist")
