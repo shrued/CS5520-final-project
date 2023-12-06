@@ -19,7 +19,7 @@ class HomeScreenView: UIView {
     var ProgressMessage: UILabel!
     
     var ArticleButton: UIButton!
-    
+    var ReadArticlesLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -106,6 +106,17 @@ class HomeScreenView: UIView {
         ArticleButton.imageView?.contentMode = .scaleAspectFit
         ArticleButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(ArticleButton)
+        
+        setupReadArticlesLabel()
+    }
+    
+    func setupReadArticlesLabel() {
+        ReadArticlesLabel = UILabel()
+        ReadArticlesLabel.text = "Read Articles"
+        ReadArticlesLabel.textColor = .black
+        ReadArticlesLabel.font = .systemFont(ofSize: 16)
+        ReadArticlesLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(ReadArticlesLabel)
     }
     
     func initConstraints() {
@@ -135,10 +146,15 @@ class HomeScreenView: UIView {
             ProgressMessage.centerXAnchor.constraint(equalTo: ProgressLabel.centerXAnchor),
             
             ArticleButton.topAnchor.constraint(equalTo: ProgressMessage.bottomAnchor, constant: 30),
-            ArticleButton.centerXAnchor.constraint(equalTo: ProgressMessage.centerXAnchor)
+            ArticleButton.centerXAnchor.constraint(equalTo: ProgressMessage.centerXAnchor),
+            
+            ReadArticlesLabel.topAnchor.constraint(equalTo: ArticleButton.bottomAnchor, constant: 10),
+            ReadArticlesLabel.centerXAnchor.constraint(equalTo: ArticleButton.centerXAnchor)
         ])
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+
