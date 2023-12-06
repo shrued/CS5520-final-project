@@ -67,6 +67,8 @@
 		FA9519822B1AA90800FDFD42 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA9519812B1AA90800FDFD42 /* FirebaseFirestoreSwift */; };
 		FA9519842B1AA90800FDFD42 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FA9519832B1AA90800FDFD42 /* FirebaseStorage */; };
 		FAD485CD2B212C4D004C2E54 /* LoginScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD485CC2B212C4D004C2E54 /* LoginScreenView.swift */; };
+		FAD485D02B212C86004C2E54 /* RegisterScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD485CF2B212C86004C2E54 /* RegisterScreenController.swift */; };
+		FAD485D32B212C9C004C2E54 /* RegisterScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD485D22B212C9C004C2E54 /* RegisterScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		FA9519722B1A9EAA00FDFD42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA9519742B1A9EAA00FDFD42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAD485CC2B212C4D004C2E54 /* LoginScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenView.swift; sourceTree = "<group>"; };
+		FAD485CF2B212C86004C2E54 /* RegisterScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenController.swift; sourceTree = "<group>"; };
+		FAD485D22B212C9C004C2E54 /* RegisterScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +271,7 @@
 		FA9519652B1A9EA900FDFD42 /* CS5520Final */ = {
 			isa = PBXGroup;
 			children = (
+				FAD485CE2B212C74004C2E54 /* Register Screen */,
 				FAD485C92B212BF6004C2E54 /* Login Screen */,
 				DF6942EC2B1FA6790041D2F6 /* Edit Profile Screen */,
 				DF6942E42B1ED59E0041D2F6 /* Profile Screen */,
@@ -299,6 +304,23 @@
 			isa = PBXGroup;
 			children = (
 				FAD485CC2B212C4D004C2E54 /* LoginScreenView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FAD485CE2B212C74004C2E54 /* Register Screen */ = {
+			isa = PBXGroup;
+			children = (
+				FAD485D12B212C8F004C2E54 /* Views */,
+				FAD485CF2B212C86004C2E54 /* RegisterScreenController.swift */,
+			);
+			path = "Register Screen";
+			sourceTree = "<group>";
+		};
+		FAD485D12B212C8F004C2E54 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FAD485D22B212C9C004C2E54 /* RegisterScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -427,6 +449,7 @@
 				FA9519672B1A9EA900FDFD42 /* AppDelegate.swift in Sources */,
 				DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */,
 				FA9519692B1A9EA900FDFD42 /* SceneDelegate.swift in Sources */,
+				FAD485D02B212C86004C2E54 /* RegisterScreenController.swift in Sources */,
 				DF6942F12B1FA6B30041D2F6 /* EditScreenViewController.swift in Sources */,
 				DF6942E32B1ECC350041D2F6 /* HomeScreenViewController.swift in Sources */,
 				E4A70E2A2B1BD18F001B65C1 /* ProgressSpinnerViewController.swift in Sources */,
@@ -437,6 +460,7 @@
 				E4A70E302B1BE2F4001B65C1 /* OverviewScreenView.swift in Sources */,
 				FAD485CD2B212C4D004C2E54 /* LoginScreenView.swift in Sources */,
 				E4A70E2C2B1BD1A9001B65C1 /* ProgressSpinnerDelegate.swift in Sources */,
+				FAD485D32B212C9C004C2E54 /* RegisterScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
