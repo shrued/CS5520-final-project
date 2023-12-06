@@ -12,27 +12,27 @@ class ArticleCell: UITableViewCell {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 0
         return label
     }()
 
     private let contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 0
         return label
     }()
 
     private let authorLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.italicSystemFont(ofSize: 12)
+        label.font = UIFont.italicSystemFont(ofSize: 14)
         return label
     }()
 
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .right
         return label
     }()
