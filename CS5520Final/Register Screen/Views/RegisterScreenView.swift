@@ -13,10 +13,12 @@ class RegisterScreenView: UIView {
     var textFieldPassword: UITextField!
     var textFieldRepeatPassword: UITextField!
     var buttonRegister: UIButton!
+    var logoImageView: UIImageView!
 
     override init(frame: CGRect){
         super.init(frame: frame)
         self.backgroundColor = .white
+        setupLogoImageView()
         setuptextFieldName()
         setuptextFieldEmail()
         setuptextFieldPassword()
@@ -24,6 +26,14 @@ class RegisterScreenView: UIView {
         setupbuttonRegister()
 
         initConstraints()
+    }
+    
+    func setupLogoImageView() {
+        logoImageView = UIImageView()
+        logoImageView.image = UIImage(named: "Logo")
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(logoImageView)
     }
 
     func setuptextFieldName(){
@@ -74,7 +84,12 @@ class RegisterScreenView: UIView {
 
     func initConstraints(){
         NSLayoutConstraint.activate([
-            textFieldName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
+            logoImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
+            logoImageView.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            textFieldName.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 32),
             textFieldName.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             textFieldName.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
 
