@@ -10,11 +10,13 @@ struct Article {
     var content: String
     var author: String
     var date: String
+    var tags: [String]
 
-    init(title: String, content: String, author: String, date: String) {
+    init(title: String, content: String, author: String, date: String, tags: [String]) {
         self.title = title
         self.content = content
         self.author = author
         self.date = date
+        self.tags = tags
     }
 }

@@ -59,8 +59,9 @@ class ArticlesScreenController: UIViewController {
                 let title = articleData["title"] as? String,
                 let content = articleData["content"] as? String,
                 let author = articleData["author"] as? String,
-                let date = articleData["date"] as? String {
-                let article = Article(title: title, content: content, author: author, date: date)
+                let date = articleData["date"] as? String,
+               let tags = articleData["tags"] as? [String] {
+                let article = Article(title: title, content: content, author: author, date: date, tags: tags)
                 articles.append(article)
             }
         }

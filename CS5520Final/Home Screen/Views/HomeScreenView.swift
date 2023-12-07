@@ -19,7 +19,6 @@ class HomeScreenView: UIView {
     var ProgressMessage: UILabel!
     
     var ArticleButton: UIButton!
-    var ReadArticlesLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,24 +98,14 @@ class HomeScreenView: UIView {
     
     func setupArticleButton() {
         ArticleButton = UIButton()
-        ArticleButton.setTitle("", for: .normal)
+        ArticleButton.setTitle("Read Articles", for: .normal)
+        ArticleButton.setTitleColor(.systemBlue, for: .normal)
         ArticleButton.setImage(UIImage(systemName: "book.fill"), for: .normal)
         ArticleButton.contentHorizontalAlignment = .fill
         ArticleButton.contentVerticalAlignment = .fill
         ArticleButton.imageView?.contentMode = .scaleAspectFit
         ArticleButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(ArticleButton)
-        
-        setupReadArticlesLabel()
-    }
-    
-    func setupReadArticlesLabel() {
-        ReadArticlesLabel = UILabel()
-        ReadArticlesLabel.text = "Read Articles"
-        ReadArticlesLabel.textColor = .black
-        ReadArticlesLabel.font = .systemFont(ofSize: 16)
-        ReadArticlesLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(ReadArticlesLabel)
     }
     
     func initConstraints() {
@@ -146,10 +135,7 @@ class HomeScreenView: UIView {
             ProgressMessage.centerXAnchor.constraint(equalTo: ProgressLabel.centerXAnchor),
             
             ArticleButton.topAnchor.constraint(equalTo: ProgressMessage.bottomAnchor, constant: 30),
-            ArticleButton.centerXAnchor.constraint(equalTo: ProgressMessage.centerXAnchor),
-            
-            ReadArticlesLabel.topAnchor.constraint(equalTo: ArticleButton.bottomAnchor, constant: 10),
-            ReadArticlesLabel.centerXAnchor.constraint(equalTo: ArticleButton.centerXAnchor)
+            ArticleButton.centerXAnchor.constraint(equalTo: ProgressMessage.centerXAnchor)
         ])
     }
     required init?(coder: NSCoder) {
