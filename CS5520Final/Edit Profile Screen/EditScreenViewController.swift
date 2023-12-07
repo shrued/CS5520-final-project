@@ -8,6 +8,7 @@
 import UIKit
 import PhotosUI
 import FirebaseAuth
+import FirebaseFirestore
 
 class EditScreenViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class EditScreenViewController: UIViewController {
     var editScreen = EditScreenView()
     var delegate:ProfileScreenViewController!
     var handleAuth: AuthStateDidChangeListenerHandle?
+    var database = Firestore.firestore()
+    var currentUser:FirebaseAuth.User?
     
     override func loadView() {
         view = editScreen
@@ -38,6 +41,8 @@ class EditScreenViewController: UIViewController {
         handleAuth = Auth.auth().addStateDidChangeListener {(auth, user) in
             if user == nil {
                 // No user is signed in
+            } else {
+                self.currentUser = user
             }
         }
     }
@@ -113,11 +118,28 @@ class EditScreenViewController: UIViewController {
         }
         
         let Profile = ProfileInfo(name: name, age: age, gender: gender, weight: weight, height: height, goal: goal)
-        delegate.profile = Profile
-        delegate.profileScreen.profileImage.image = pickedImage
-        delegate.delegateOnEditProfile()
         
-        navigationController?.popViewController(animated: true)
+        let profileDoc = database
+            .collection("users")
+            .document((currentUser?.email)!)
+            .collection("profileInfo")
+            .document("profileDetails")
+        
+        do {
+            try profileDoc.setData(from: Profile, completion: {(error) in
+                if error == nil{
+                    self.delegate.profile = Profile
+                    self.delegate.profileScreen.profileImage.image = self.pickedImage
+                    self.delegate.delegateOnEditProfile()
+                    self.navigationController?.popViewController(animated: true)
+                }})
+        } catch{
+            presentAlert(title: "ERROR", message: "Failed to save data!")
+        }
+        
+        
+        
+       
     }
     
     //MARK: menu for buttonTakePhoto setup...

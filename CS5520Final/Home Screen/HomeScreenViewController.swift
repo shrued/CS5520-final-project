@@ -15,9 +15,52 @@ class HomeScreenViewController: UIViewController {
     var homeScreen = HomeScreenView()
     var flag = false
     var timer = 0
+    var handleAuth: AuthStateDidChangeListenerHandle?
+    var database = Firestore.firestore()
     
     override func loadView() {
         view = homeScreen
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //MARK: handling if the Authentication state is changed (sign in, sign out, register)...
+        handleAuth = Auth.auth().addStateDidChangeListener{ auth, user in
+            if user == nil {
+                
+            } else {
+                let userEmail = (user?.email)!
+                let profileCollection = self.database
+                    .collection("users")
+                    .document(userEmail)
+                    .collection("profileInfo")
+                
+                profileCollection.getDocuments(completion: {QuerySnapshot, error in
+                    if error == nil {
+                        if let documents = QuerySnapshot?.documents{
+                            let docNum = documents.count
+                            if docNum == 0 {
+                                self.homeScreen.ProgressMessage.text = "Please setup profile in Overview!"
+                                self.presentAlert(title: "WARNING", message: "NO PROFILE INFO FOUND!")
+                            } else {
+                                //MARK: Update information when profile info is found!
+                                do {
+                                    let profileDetail = try documents[0].data(as: ProfileInfo.self)
+                                    if profileDetail.weight - profileDetail.goal > 0 {
+                                        self.homeScreen.ProgressMessage.text = "You have \(profileDetail.weight - profileDetail.goal) pounds to go!"
+                                    } else {
+                                        self.homeScreen.ProgressMessage.text = "Congratulations! You have reached your goal!"
+                                    }
+                                } catch{
+                                    print(error)
+                                }
+                            }
+                        }
+                    }})
+            }
+                
+        }
     }
     
     override func viewDidLoad() {
@@ -32,6 +75,18 @@ class HomeScreenViewController: UIViewController {
                                 for: .touchUpInside)
         homeScreen.ArticleButton.addTarget(self, action: #selector(onButtonArticlesTapped), for: .touchUpInside)
         homeScreen.resetButton.addTarget(self, action: #selector(onButtonResetTapped), for: .touchUpInside)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handleAuth!)
+    }
+    
+    // MARK: Present alert...
+    func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        present(alert, animated: true)
     }
     
     @objc func onButtonResetTapped() {
