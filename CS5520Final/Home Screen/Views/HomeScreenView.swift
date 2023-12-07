@@ -14,11 +14,14 @@ class HomeScreenView: UIView {
     
     var TimerImage: UIImageView!
     var TimerLabel: UILabel!
+    var resetButton: UIButton!
+    var TimerMessage: UILabel!
     
     var ProgressLabel: UILabel!
     var ProgressMessage: UILabel!
     
     var ArticleButton: UIButton!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +34,8 @@ class HomeScreenView: UIView {
         setupProgressLabel()
         setupProgressMessage()
         setupArticleButton()
+        setupResetButton()
+        setupTimerMessage()
         
         initConstraints()
     }
@@ -78,6 +83,27 @@ class HomeScreenView: UIView {
         self.addSubview(TimerLabel)
     }
     
+    func setupResetButton() {
+        resetButton = UIButton(type: .system)
+        resetButton.setTitle("RESET TIMER", for: .normal)
+        resetButton.titleLabel!.font = .systemFont(ofSize: 20.0, weight: .bold)
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(resetButton)
+    }
+    
+    func setupTimerMessage() {
+        TimerMessage = UILabel()
+        TimerMessage.text = "Press RESET TIMER to Start"
+        TimerMessage.textColor = .white
+        TimerMessage.backgroundColor = .gray
+        TimerMessage.font = .systemFont(ofSize: 20, weight: .bold)
+        TimerMessage.frame = CGRect(x: 100, y: 100, width: 300, height: 50)
+        TimerMessage.layer.cornerRadius = 10
+        TimerMessage.textAlignment = .center
+        TimerMessage.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(TimerMessage)
+    }
+    
     func setupProgressLabel() {
         ProgressLabel = UILabel()
         ProgressLabel.text = "Current Progress"
@@ -98,8 +124,7 @@ class HomeScreenView: UIView {
     
     func setupArticleButton() {
         ArticleButton = UIButton()
-        ArticleButton.setTitle("Read Articles", for: .normal)
-        ArticleButton.setTitleColor(.systemBlue, for: .normal)
+        ArticleButton.setTitle("", for: .normal)
         ArticleButton.setImage(UIImage(systemName: "book.fill"), for: .normal)
         ArticleButton.contentHorizontalAlignment = .fill
         ArticleButton.contentVerticalAlignment = .fill
@@ -128,7 +153,15 @@ class HomeScreenView: UIView {
             TimerLabel.topAnchor.constraint(equalTo: TimerImage.bottomAnchor, constant: 20),
             TimerLabel.centerXAnchor.constraint(equalTo: TimerImage.centerXAnchor),
             
-            ProgressLabel.topAnchor.constraint(equalTo: TimerLabel.bottomAnchor, constant: 64),
+            resetButton.topAnchor.constraint(equalTo: TimerLabel.bottomAnchor, constant: 20),
+            resetButton.centerXAnchor.constraint(equalTo: TimerLabel.centerXAnchor),
+            
+            TimerMessage.topAnchor.constraint(equalTo: resetButton.bottomAnchor, constant: 20),
+            TimerMessage.centerXAnchor.constraint(equalTo: resetButton.centerXAnchor),
+            TimerMessage.widthAnchor.constraint(equalToConstant: 300),
+            TimerMessage.heightAnchor.constraint(equalToConstant: 50),
+            
+            ProgressLabel.topAnchor.constraint(equalTo: TimerLabel.bottomAnchor, constant: 96),
             ProgressLabel.centerXAnchor.constraint(equalTo: TimerLabel.centerXAnchor),
             
             ProgressMessage.topAnchor.constraint(equalTo: ProgressLabel.bottomAnchor, constant: 20),
@@ -142,5 +175,3 @@ class HomeScreenView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-

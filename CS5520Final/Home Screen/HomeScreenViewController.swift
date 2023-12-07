@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseAuth
 
 class HomeScreenViewController: UIViewController {
 
     var homeScreen = HomeScreenView()
+    var flag = false
+    var timer = 0
     
     override func loadView() {
         view = homeScreen
@@ -26,6 +31,15 @@ class HomeScreenViewController: UIViewController {
         homeScreen.RecordButton.addTarget(self, action: #selector(onButtonRecordingTapped),
                                 for: .touchUpInside)
         homeScreen.ArticleButton.addTarget(self, action: #selector(onButtonArticlesTapped), for: .touchUpInside)
+        homeScreen.resetButton.addTarget(self, action: #selector(onButtonResetTapped), for: .touchUpInside)
+    }
+    
+    @objc func onButtonResetTapped() {
+        flag = true
+        let currentDate = Date()
+        let secondsSinceEpoch = currentDate.timeIntervalSince1970
+        let secondsSinceEpochInt = Int(currentDate.timeIntervalSince1970)
+        timer = secondsSinceEpochInt
     }
     
     @objc func onButtonOverviewTapped() {
