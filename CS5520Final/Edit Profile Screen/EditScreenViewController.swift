@@ -131,6 +131,7 @@ class EditScreenViewController: UIViewController {
                     self.delegate.profile = Profile
                     self.delegate.profileScreen.profileImage.image = self.pickedImage
                     self.delegate.delegateOnEditProfile()
+                
                     self.navigationController?.popViewController(animated: true)
                 }})
         } catch{

@@ -96,21 +96,32 @@ class OverviewScreenViewController: UIViewController {
             presentAlert(title: "Error", message: "User not logged in")
             return
         }
+
         let db = Firestore.firestore()
         let profileDocument = db.collection("users").document(userEmail).collection("profileInfo").document("profileDetails")
-        
-        profileDocument.getDocument { (document, error) in
+
+        profileDocument.getDocument { [weak self] (document, error) in
+            guard let self = self else { return }
+
             if let document = document, document.exists {
-                let profileData = try? document.data(as: ProfileInfo.self)
-                if let profileData = profileData {
-                    self.updateProgressBar(currentWeight: profileData.weight, goalWeight: profileData.goal) // MARK: suppose goalweight
+                if let profileData = try? document.data(as: ProfileInfo.self) {
+                    // Update the UI with the latest profile data
+                    self.updateUIWithProfile(profileData)
                 }
             } else {
                 self.presentAlert(title: "Error", message: "Document does not exist")
             }
         }
-        
     }
+
+    func updateUIWithProfile(_ profile: ProfileInfo) {
+        // Update the current weight label
+        overviewScreenView.labelCurrentWeightValue.text = "\(profile.weight) lbs"
+        // Update the progress bar
+        updateProgressBar(currentWeight: profile.weight, goalWeight: profile.goal)
+        // Update other UI elements as needed based on the profile
+    }
+
         
         // MARK: Fetch daily intake data...
     func fetchDailyIntakeData() {
@@ -157,9 +168,26 @@ class OverviewScreenViewController: UIViewController {
         
         
     func updateProgressBar(currentWeight: Double, goalWeight: Double) {
-        let progress = (currentWeight - goalWeight) / currentWeight
+        let weightDifference = abs(currentWeight - goalWeight)
+        
+        // Define a maximum difference which represents the range of the progress bar.
+        let maxDifference = 500.0
+
+        let progress: Double
+
+        if weightDifference >= maxDifference {
+            // If the difference is greater than or equal to the max, no progress is made.
+            progress = 0
+        } else {
+            // Calculate progress as the inverse ratio of the difference to the maximum.
+            progress = 1 - (weightDifference / maxDifference)
+        }
+
         overviewScreenView.weightProgressBar.setProgress(Float(progress), animated: true)
     }
+
+
+
 
         
     // MARK: Update chart data...
