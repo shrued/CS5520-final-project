@@ -5,6 +5,7 @@
 //  Created by Hanru Chen on 12/2/23.
 //
 
+import Foundation
 import UIKit
 import DGCharts
 import FirebaseFirestore
@@ -12,6 +13,7 @@ import FirebaseAuth
 
 class OverviewScreenViewController: UIViewController {
     var overviewScreenView = OverviewScreenView()
+    var handleAuth: AuthStateDidChangeListenerHandle?
     
     override func loadView() {
         view = overviewScreenView
@@ -19,18 +21,36 @@ class OverviewScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchUserProfile()
-        fetchDailyIntakeData()
+        
+        handleAuth = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+            guard let self = self else { return }
+            if let user = user {
+                // User is signed in
+                self.fetchUserProfile()
+                self.fetchDailyIntakeData()
+            } else {
+                // No user is signed in
+                self.presentAlert(title: "Error", message: "Please sign in to see your overview.")
+                // Optionally, redirect to the login screen
+            }
+        }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Remove the authentication state listener when the view is no longer visible
+        if let handleAuth = handleAuth {
+            Auth.auth().removeStateDidChangeListener(handleAuth)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.layoutIfNeeded() // force the layout of subviews before view appears
         overviewScreenView.buttonProfile.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
         overviewScreenView.buttonUpdate.addTarget(self, action: #selector(saveWeightButtonTapped), for: .touchUpInside)
-        
-        fetchDailyIntakeData()
-        fetchUserProfile()
     }
     
     @objc func profileButtonTapped() {
@@ -101,14 +121,17 @@ class OverviewScreenViewController: UIViewController {
             
             // get today's date
         let today = Date()
-        let formatter = DateFormatter() //
-        formatter.dateFormat = "yyyy-MM-dd"
-        let todayStr = formatter.string(from: today) // "2020-12-23 make it a string"
-            
-        // get data from Firestore fetching the collection "users" -> document "userEmail" -> collection "recordingInfo"
+        let startOfDay = Calendar.current.startOfDay(for: today)
+        
+        let startTimestamp = Timestamp(date: startOfDay)
+        
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        let endTimestamp = Timestamp(date: endOfDay)
+        
         let collectionRecInfo = Firestore.firestore().collection("users").document(userEmail).collection("recordingInfo")
         // get all documents where date = today
-        collectionRecInfo.whereField("date", isEqualTo: todayStr).getDocuments { (querySnapshot, error) in
+        collectionRecInfo.whereField("date", isGreaterThanOrEqualTo: startTimestamp)
+                         .whereField("date", isLessThan: endTimestamp).getDocuments { (querySnapshot, error) in
             if let error = error {
                 self.presentAlert(title: "Error", message: error.localizedDescription)
                 return
@@ -141,21 +164,28 @@ class OverviewScreenViewController: UIViewController {
         
     // MARK: Update chart data...
     func updateIntakeChartData(calories: Double, sugar: Double, sodium: Double, water: Double) {
-            
-        // update chart data
-        let dataSet = BarChartDataSet(entries: [
-            BarChartDataEntry(x: 1, y: calories),
-            BarChartDataEntry(x: 2, y: sugar),
-            BarChartDataEntry(x: 3, y: sodium),
-            BarChartDataEntry(x: 4, y: water)
-            ], label: "Daily Intake")
-            
+        let entries = [
+            BarChartDataEntry(x: 0, y: calories),
+            BarChartDataEntry(x: 1, y: sugar),
+            BarChartDataEntry(x: 2, y: sodium),
+            BarChartDataEntry(x: 3, y: water)
+        ]
+
+        let dataSet = BarChartDataSet(entries: entries, label: "Daily Intake")
         dataSet.colors = [NSUIColor.systemBlue]
-            
+
         let data = BarChartData(dataSet: dataSet)
         overviewScreenView.chartViewIntakes.data = data
-            
-            // refresh chart
+
+        // Define the labels to display under each bar
+        let labels = ["Calories", "Sugar", "Sodium", "Water"]
+        
+        // Set the formatter for the xAxis to use these labels
+        overviewScreenView.chartViewIntakes.xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
+        overviewScreenView.chartViewIntakes.xAxis.granularity = 1
+        overviewScreenView.chartViewIntakes.xAxis.labelPosition = .bottom
+
+        // Refresh chart
         overviewScreenView.chartViewIntakes.notifyDataSetChanged()
     }
         
