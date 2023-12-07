@@ -7,6 +7,7 @@ import FirebaseFirestoreSwift
 
 class RecordingScreenViewController: UIViewController {
     var currentUser: FirebaseAuth.User?
+    var handleAuth: AuthStateDidChangeListenerHandle?
     let database = Firestore.firestore()
     let recordingScreen = RecordingScreenView()
     let childProgressView = ProgressSpinnerViewController()
@@ -21,6 +22,28 @@ class RecordingScreenViewController: UIViewController {
         recordingScreen.buttonSave.addTarget(self, action: #selector(onSaveButtonTapped), for: .touchUpInside)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleAuth = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
+            if let user = user {
+                // User is signed in
+                self?.currentUser = user
+            } else {
+                // No user is signed in
+                self?.currentUser = nil
+                self?.presentAlert(title: "Error", message: "Please sign in to save your recording.")
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let handleAuth = handleAuth {
+            Auth.auth().removeStateDidChangeListener(handleAuth)
+        }
+    }
+    
     //MARK: save button action tapped...
     @objc func onSaveButtonTapped() {
         guard let caloriesFoodName = recordingScreen.textFieldFoodName.text,
