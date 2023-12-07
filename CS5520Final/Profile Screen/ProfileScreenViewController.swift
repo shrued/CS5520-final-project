@@ -39,12 +39,12 @@ class ProfileScreenViewController: UIViewController {
                                 //MARK: Update information when profile info is found!
                                 do {
                                     let profileDetail = try documents[0].data(as: ProfileInfo.self)
-                                    self.profileScreen.nameLabel.text = profileDetail.name
-                                    self.profileScreen.ageLabel.text = String(profileDetail.age)
-                                    self.profileScreen.genderLabel.text = profileDetail.gender
-                                    self.profileScreen.weightLabel.text = String(profileDetail.weight)
-                                    self.profileScreen.heightLabel.text = String(profileDetail.height)
-                                    self.profileScreen.goalLabel.text = String(profileDetail.goal)
+                                    self.profileScreen.nameLabel.text = "Name: " + profileDetail.name
+                                    self.profileScreen.ageLabel.text = "Age: " + String(profileDetail.age)
+                                    self.profileScreen.genderLabel.text = "Gender: " + profileDetail.gender
+                                    self.profileScreen.weightLabel.text = "Weight: " + String(profileDetail.weight) + " lbs"
+                                    self.profileScreen.heightLabel.text = "Height: " + String(profileDetail.height)
+                                    self.profileScreen.goalLabel.text = "Goal: " + String(profileDetail.goal) + " lbs"
                                 } catch{
                                     print(error)
                                 }

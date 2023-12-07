@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
+
+struct Time: Codable {
+    @DocumentID var id: String?
+    var time: Int
+    
+    init(time: Int) {
+        self.time = time
+    }
+}

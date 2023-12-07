@@ -60,6 +60,29 @@ class HomeScreenViewController: UIViewController {
                             }
                         }
                     }})
+                
+                let timerInfo = self.database.collection("users").document(userEmail).collection("timer")
+                timerInfo.getDocuments(completion: {QuerySnapshot, error in
+                    if error == nil {
+                        if let documents = QuerySnapshot?.documents{
+                            let docNum = documents.count
+                            if docNum == 0 {
+                                let time = Time(time: self.timer)
+                                let timeDoc = timerInfo.document("TimeInfo")
+                                do {
+                                    try timeDoc.setData(from: time, completion: {(error) in
+                                        if error == nil {
+                                            
+                                        }})
+                                } catch {
+                                    print(error)
+                                }
+                                
+                            } else {
+                                self.showTimer()
+                            }
+                        }
+                    }})
             }
                 
         }
@@ -69,7 +92,7 @@ class HomeScreenViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Home Page"
-        
+        self.navigationItem.hidesBackButton = true
         
         homeScreen.OverviewButton.addTarget(self, action: #selector(onButtonOverviewTapped),
                                 for: .touchUpInside)
@@ -78,7 +101,7 @@ class HomeScreenViewController: UIViewController {
         homeScreen.ArticleButton.addTarget(self, action: #selector(onButtonArticlesTapped), for: .touchUpInside)
         homeScreen.resetButton.addTarget(self, action: #selector(onButtonResetTapped), for: .touchUpInside)
         
-        showTimer()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,28 +110,54 @@ class HomeScreenViewController: UIViewController {
     }
     
     func showTimer() {
-        if timer != 0 {
-            let currentTime = Date()
-            let secondsSinceEpochInt = Int(currentTime.timeIntervalSince1970)
-            if secondsSinceEpochInt - timer == 0{
-                homeScreen.TimerMessage.text = "8:00:00"
-            }
-            else if (secondsSinceEpochInt - timer) % (8 * 3600) == 0 && (secondsSinceEpochInt - timer + 16 * 3600) % (24 * 3600) == 0 {
-                homeScreen.TimerMessage.text = "16:00:00"
-            }
-            else if (secondsSinceEpochInt - timer) % (24 * 3600) == 0 && (secondsSinceEpochInt != timer){
-                timer = secondsSinceEpochInt
-                homeScreen.TimerMessage.text = "8:00:00"
-            }
-            else if (secondsSinceEpochInt - timer) < (8 * 3600) {
-                let remaining = 8 * 3600 - (secondsSinceEpochInt - timer)
-                let hour = remaining / 3600
-                let minutes = (remaining - (hour * 3600)) / 60
-                let seconds = (remaining - (hour * 3600) - (minutes * 60))
-                homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
+        currEmail = (Auth.auth().currentUser?.email)!
+        let time = database.collection("users").document(currEmail).collection("timer")
+        
+        time.getDocuments(completion: {QuerySnapshot, error in
+            if error == nil {
+                if let documents = QuerySnapshot?.documents{
+                    
+                        do {
+                            let timerInfo = try documents[0].data(as: Time.self)
+                            self.timer = timerInfo.time
+                            if self.timer != 0 {
+                                let currentTime = Date()
+                                let secondsSinceEpochInt = Int(currentTime.timeIntervalSince1970)
+                                if secondsSinceEpochInt - self.timer == 0{
+                                    self.homeScreen.TimerMessage.text = "8:00:00"
+                                }
+                                else if (secondsSinceEpochInt - self.timer) % (8 * 3600) == 0 && (secondsSinceEpochInt - self.timer + 16 * 3600) % (24 * 3600) == 0 {
+                                    self.homeScreen.TimerMessage.text = "16:00:00"
+                                    self.presentAlert(title: "WARNING", message: "EATING PERIOD STOPS")
+                                }
+                                else if (secondsSinceEpochInt - self.timer) % (24 * 3600) == 0 && (secondsSinceEpochInt != self.timer){
+                                    self.timer = secondsSinceEpochInt
+                                    self.homeScreen.TimerMessage.text = "8:00:00"
+                                }
+                                else if (secondsSinceEpochInt - self.timer) < (8 * 3600) {
+                                    let remaining = 8 * 3600 - (secondsSinceEpochInt - self.timer)
+                                    let hour = remaining / 3600
+                                    let minutes = (remaining - (hour * 3600)) / 60
+                                    let seconds = (remaining - (hour * 3600) - (minutes * 60))
+                                    self.homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
+                                }
+                                else if (secondsSinceEpochInt - self.timer) > (8 * 3600) {
+                                    let remaining = 16 * 3600 - (secondsSinceEpochInt - self.timer - 8 * 3600)
+                                    let hour = remaining / 3600
+                                    let minutes = (remaining - (hour * 3600)) / 60
+                                    let seconds = (remaining - (hour * 3600) - (minutes * 60))
+                                    self.homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
+                                }
+                                
+                            }
+                        } catch{
+                            print(error)
+                        }
+                    }
                 
-            }
-        }
+            }})
+        
+        
     }
     
     // MARK: Present alert...
@@ -124,7 +173,17 @@ class HomeScreenViewController: UIViewController {
         let secondsSinceEpochInt = Int(currentDate.timeIntervalSince1970)
         timer = secondsSinceEpochInt
         
-        
+        let timerInfo = self.database.collection("users").document(currEmail).collection("timer").document("TimerInfo")
+        let time = Time(time: self.timer)
+        do {
+            try timerInfo.setData(from: time, completion: {(error) in
+                if error == nil{
+                    
+                }})
+        } catch{
+            print(error)
+        }
+
         
         
         showTimer()

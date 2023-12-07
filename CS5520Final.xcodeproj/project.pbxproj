@@ -14,6 +14,7 @@
 		DF6942EB2B1EE1970041D2F6 /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */; };
 		DF6942EF2B1FA69F0041D2F6 /* EditScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942EE2B1FA69F0041D2F6 /* EditScreenView.swift */; };
 		DF6942F12B1FA6B30041D2F6 /* EditScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942F02B1FA6B30041D2F6 /* EditScreenViewController.swift */; };
+		DF6942F32B22409B0041D2F6 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6942F22B22409B0041D2F6 /* Time.swift */; };
 		E4A70DE02B1BAC8F001B65C1 /* RecordingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */; };
 		E4A70DE22B1BACA1001B65C1 /* RecordingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */; };
 		E4A70DE42B1BACD4001B65C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4A70DE32B1BACD4001B65C1 /* FirebaseAnalytics */; };
@@ -83,6 +84,7 @@
 		DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		DF6942EE2B1FA69F0041D2F6 /* EditScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenView.swift; sourceTree = "<group>"; };
 		DF6942F02B1FA6B30041D2F6 /* EditScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenViewController.swift; sourceTree = "<group>"; };
+		DF6942F22B22409B0041D2F6 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		E4A70DDF2B1BAC8F001B65C1 /* RecordingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenView.swift; sourceTree = "<group>"; };
 		E4A70DE12B1BACA1001B65C1 /* RecordingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingScreenViewController.swift; sourceTree = "<group>"; };
 		E4A70E232B1BC6F1001B65C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -231,6 +233,7 @@
 				E4A70E262B1BD0DA001B65C1 /* RecordingInfo.swift */,
 				DF6942EA2B1EE1970041D2F6 /* ProfileInfo.swift */,
 				FA9EBB4C2B21376E00D4AA82 /* Article.swift */,
+				DF6942F22B22409B0041D2F6 /* Time.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				FA95196B2B1A9EA900FDFD42 /* ViewController.swift in Sources */,
 				FA9519672B1A9EA900FDFD42 /* AppDelegate.swift in Sources */,
 				DF6942E72B1ED5C40041D2F6 /* ProfileScreenView.swift in Sources */,
+				DF6942F32B22409B0041D2F6 /* Time.swift in Sources */,
 				FA9519692B1A9EA900FDFD42 /* SceneDelegate.swift in Sources */,
 				FAD485D02B212C86004C2E54 /* RegisterScreenController.swift in Sources */,
 				FA9EBB462B2134B800D4AA82 /* ArticlesScreenController.swift in Sources */,
