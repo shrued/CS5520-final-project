@@ -20,7 +20,6 @@ class HomeScreenView: UIView {
     
     var ArticleButton: UIButton!
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
@@ -99,7 +98,8 @@ class HomeScreenView: UIView {
     
     func setupArticleButton() {
         ArticleButton = UIButton()
-        ArticleButton.setTitle("", for: .normal)
+        ArticleButton.setTitle("Read Articles", for: .normal)
+        ArticleButton.setTitleColor(.systemBlue, for: .normal)
         ArticleButton.setImage(UIImage(systemName: "book.fill"), for: .normal)
         ArticleButton.contentHorizontalAlignment = .fill
         ArticleButton.contentVerticalAlignment = .fill
@@ -142,3 +142,5 @@ class HomeScreenView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+

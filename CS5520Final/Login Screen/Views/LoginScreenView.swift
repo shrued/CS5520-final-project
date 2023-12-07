@@ -8,6 +8,14 @@
 import UIKit
 
 class LoginView: UIView {
+    
+    let logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Logo")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
 
     let emailTextField: UITextField = {
         let textField = UITextField()
@@ -62,6 +70,7 @@ class LoginView: UIView {
         addSubview(passwordTextField)
         addSubview(loginButton)
         addSubview(registerButton)
+        addSubview(logoImageView)
 
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -69,7 +78,12 @@ class LoginView: UIView {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 50),
+            logoImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 50),
+            logoImageView.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            emailTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20),
             emailTextField.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             emailTextField.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
@@ -82,7 +96,7 @@ class LoginView: UIView {
             loginButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 20),
-            registerButton.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor)
+            registerButton.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
         ])
     }
 }

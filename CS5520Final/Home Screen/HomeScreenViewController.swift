@@ -25,9 +25,7 @@ class HomeScreenViewController: UIViewController {
                                 for: .touchUpInside)
         homeScreen.RecordButton.addTarget(self, action: #selector(onButtonRecordingTapped),
                                 for: .touchUpInside)
-        
-        // MARK: Assign action here when article screen is ready!!!
-        //homeScreen.ArticleButton.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
+        homeScreen.ArticleButton.addTarget(self, action: #selector(onButtonArticlesTapped), for: .touchUpInside)
     }
     
     @objc func onButtonOverviewTapped() {
@@ -38,5 +36,10 @@ class HomeScreenViewController: UIViewController {
     @objc func onButtonRecordingTapped() {
         let recordingController = RecordingScreenViewController()
         navigationController?.pushViewController(recordingController, animated: true)
+    }
+    
+    @objc func onButtonArticlesTapped() {
+        let articlesController = ArticlesScreenController()
+        navigationController?.pushViewController(articlesController, animated: true)
     }
 }
