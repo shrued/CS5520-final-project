@@ -17,6 +17,7 @@ class HomeScreenViewController: UIViewController {
     var timer = 0
     var handleAuth: AuthStateDidChangeListenerHandle?
     var database = Firestore.firestore()
+    var currEmail = ""
     
     override func loadView() {
         view = homeScreen
@@ -31,6 +32,7 @@ class HomeScreenViewController: UIViewController {
                 
             } else {
                 let userEmail = (user?.email)!
+                self.currEmail = userEmail
                 let profileCollection = self.database
                     .collection("users")
                     .document(userEmail)
@@ -75,11 +77,38 @@ class HomeScreenViewController: UIViewController {
                                 for: .touchUpInside)
         homeScreen.ArticleButton.addTarget(self, action: #selector(onButtonArticlesTapped), for: .touchUpInside)
         homeScreen.resetButton.addTarget(self, action: #selector(onButtonResetTapped), for: .touchUpInside)
+        
+        showTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handleAuth!)
+    }
+    
+    func showTimer() {
+        if timer != 0 {
+            let currentTime = Date()
+            let secondsSinceEpochInt = Int(currentTime.timeIntervalSince1970)
+            if secondsSinceEpochInt - timer == 0{
+                homeScreen.TimerMessage.text = "8:00:00"
+            }
+            else if (secondsSinceEpochInt - timer) % (8 * 3600) == 0 && (secondsSinceEpochInt - timer + 16 * 3600) % (24 * 3600) == 0 {
+                homeScreen.TimerMessage.text = "16:00:00"
+            }
+            else if (secondsSinceEpochInt - timer) % (24 * 3600) == 0 && (secondsSinceEpochInt != timer){
+                timer = secondsSinceEpochInt
+                homeScreen.TimerMessage.text = "8:00:00"
+            }
+            else if (secondsSinceEpochInt - timer) < (8 * 3600) {
+                let remaining = 8 * 3600 - (secondsSinceEpochInt - timer)
+                let hour = remaining / 3600
+                let minutes = (remaining - (hour * 3600)) / 60
+                let seconds = (remaining - (hour * 3600) - (minutes * 60))
+                homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
+                
+            }
+        }
     }
     
     // MARK: Present alert...
@@ -92,9 +121,13 @@ class HomeScreenViewController: UIViewController {
     @objc func onButtonResetTapped() {
         flag = true
         let currentDate = Date()
-        let secondsSinceEpoch = currentDate.timeIntervalSince1970
         let secondsSinceEpochInt = Int(currentDate.timeIntervalSince1970)
         timer = secondsSinceEpochInt
+        
+        
+        
+        
+        showTimer()
     }
     
     @objc func onButtonOverviewTapped() {

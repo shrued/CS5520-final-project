@@ -128,9 +128,9 @@ class EditScreenViewController: UIViewController {
         do {
             try profileDoc.setData(from: Profile, completion: {(error) in
                 if error == nil{
-                    self.delegate.profile = Profile
-                    self.delegate.profileScreen.profileImage.image = self.pickedImage
-                    self.delegate.delegateOnEditProfile()
+//                    self.delegate.profile = Profile
+//                    self.delegate.profileScreen.profileImage.image = self.pickedImage
+//                    self.delegate.delegateOnEditProfile()
                 
                     self.navigationController?.popViewController(animated: true)
                 }})
