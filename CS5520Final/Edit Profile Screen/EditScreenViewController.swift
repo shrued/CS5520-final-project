@@ -7,12 +7,14 @@
 
 import UIKit
 import PhotosUI
+import FirebaseAuth
 
 class EditScreenViewController: UIViewController {
     
     var pickedImage: UIImage?
     var editScreen = EditScreenView()
     var delegate:ProfileScreenViewController!
+    var handleAuth: AuthStateDidChangeListenerHandle?
     
     override func loadView() {
         view = editScreen
@@ -27,6 +29,26 @@ class EditScreenViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         
         editScreen.saveButton.addTarget(self, action: #selector(onButtonSaveTapped), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Add authentication state listener
+        handleAuth = Auth.auth().addStateDidChangeListener {(auth, user) in
+            if user == nil {
+                // No user is signed in
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // Remove the authentication state listener
+        if let handleAuth = handleAuth {
+            Auth.auth().removeStateDidChangeListener(handleAuth)
+        }
     }
     
     @objc func onButtonSaveTapped() {
