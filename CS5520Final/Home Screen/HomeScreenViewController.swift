@@ -68,7 +68,7 @@ class HomeScreenViewController: UIViewController {
                             let docNum = documents.count
                             if docNum == 0 {
                                 let time = Time(time: self.timer)
-                                let timeDoc = timerInfo.document("TimeInfo")
+                                let timeDoc = timerInfo.document("TimerInfo")
                                 do {
                                     try timeDoc.setData(from: time, completion: {(error) in
                                         if error == nil {
