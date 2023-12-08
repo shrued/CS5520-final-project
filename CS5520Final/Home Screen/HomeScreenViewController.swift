@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class HomeScreenViewController: UIViewController {
 
@@ -20,6 +21,8 @@ class HomeScreenViewController: UIViewController {
         
         title = "Home Page"
         
+        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutButtonTapped))
+        navigationItem.leftBarButtonItem = logoutButton
         
         homeScreen.OverviewButton.addTarget(self, action: #selector(onButtonOverviewTapped),
                                 for: .touchUpInside)
@@ -41,5 +44,14 @@ class HomeScreenViewController: UIViewController {
     @objc func onButtonArticlesTapped() {
         let articlesController = ArticlesScreenController()
         navigationController?.pushViewController(articlesController, animated: true)
+    }
+    
+    @objc func logoutButtonTapped() {
+        do {
+            try Auth.auth().signOut()
+            navigationController?.popToRootViewController(animated: true)
+        } catch let error {
+            print("Error signing out: \(error.localizedDescription)")
+        }
     }
 }
