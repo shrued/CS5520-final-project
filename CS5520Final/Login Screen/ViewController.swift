@@ -26,6 +26,10 @@ class ViewController: UIViewController {
 
         loginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        
+        if Auth.auth().currentUser != nil {
+            navigateToHomeScreen()
+        }
     }
     
     
@@ -51,6 +55,11 @@ class ViewController: UIViewController {
                 self.navigationController?.pushViewController(chatListViewController, animated: true)
             }
         }
+    }
+    
+    func navigateToHomeScreen() {
+        let homeScreenViewController = HomeScreenViewController()
+        navigationController?.pushViewController(homeScreenViewController, animated: true)
     }
 
     func showAlert(message: String) {
