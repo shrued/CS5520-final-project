@@ -130,8 +130,17 @@ class HomeScreenViewController: UIViewController {
                                     self.homeScreen.TimerMessage.text = "16:00:00"
                                     self.presentAlert(title: "WARNING", message: "EATING PERIOD STOPS")
                                 }
-                                else if (secondsSinceEpochInt - self.timer) % (24 * 3600) == 0 && (secondsSinceEpochInt != self.timer){
-                                    self.timer = secondsSinceEpochInt
+                                else if (secondsSinceEpochInt - self.timer) == (24 * 3600) {
+                                    let timeInfo = time.document("TimerInfo")
+                                    let currTime = Time(time: secondsSinceEpochInt)
+                                    do {
+                                        try timeInfo.setData(from: currTime, completion: {(error) in
+                                            if error == nil {
+                                                
+                                            }})
+                                    } catch {
+                                        print(error)
+                                    }
                                     self.homeScreen.TimerMessage.text = "8:00:00"
                                 }
                                 else if (secondsSinceEpochInt - self.timer) < (8 * 3600) {
