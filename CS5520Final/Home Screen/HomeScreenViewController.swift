@@ -112,62 +112,50 @@ class HomeScreenViewController: UIViewController {
     func showTimer() {
         currEmail = (Auth.auth().currentUser?.email)!
         let time = database.collection("users").document(currEmail).collection("timer")
-        
+
         time.getDocuments(completion: {QuerySnapshot, error in
             if error == nil {
-                if let documents = QuerySnapshot?.documents{
-                    
-                        do {
-                            let timerInfo = try documents[0].data(as: Time.self)
-                            self.timer = timerInfo.time
-                            if self.timer != 0 {
-                                let currentTime = Date()
-                                let secondsSinceEpochInt = Int(currentTime.timeIntervalSince1970)
-                                if secondsSinceEpochInt - self.timer == 0{
-                                    self.homeScreen.TimerMessage.text = "8:00:00"
+                if let documents = QuerySnapshot?.documents {
+                    do {
+                        let timerInfo = try documents[0].data(as: Time.self)
+                        self.timer = timerInfo.time
+                        if self.timer != 0 {
+                            let currentTime = Date()
+                            let secondsSinceEpochInt = Int(currentTime.timeIntervalSince1970)
+                            let elapsedTime = secondsSinceEpochInt - self.timer
+                            let eatingPeriod = 8 * 3600
+                            let fastingPeriod = 16 * 3600
+                            let totalPeriod = 24 * 3600
+
+                            // Check if elapsed time is negative or beyond 24 hours
+                            if elapsedTime < 0 || elapsedTime >= totalPeriod {
+                                // Reset timer
+                                self.timer = secondsSinceEpochInt
+                                let newTime = Time(time: self.timer)
+                                try time.document("TimerInfo").setData(from: newTime)
+                                self.homeScreen.TimerMessage.text = "08:00:00"
+                            } else {
+                                // Calculate remaining time and update TimerMessage
+                                let remainingTime: Int
+                                if elapsedTime < eatingPeriod {
+                                    remainingTime = eatingPeriod - elapsedTime
+                                } else {
+                                    remainingTime = fastingPeriod - (elapsedTime - eatingPeriod)
                                 }
-                                else if (secondsSinceEpochInt - self.timer) % (8 * 3600) == 0 && (secondsSinceEpochInt - self.timer + 16 * 3600) % (24 * 3600) == 0 {
-                                    self.homeScreen.TimerMessage.text = "16:00:00"
-                                    self.presentAlert(title: "WARNING", message: "EATING PERIOD STOPS")
-                                }
-                                else if (secondsSinceEpochInt - self.timer) == (24 * 3600) {
-                                    let timeInfo = time.document("TimerInfo")
-                                    let currTime = Time(time: secondsSinceEpochInt)
-                                    do {
-                                        try timeInfo.setData(from: currTime, completion: {(error) in
-                                            if error == nil {
-                                                
-                                            }})
-                                    } catch {
-                                        print(error)
-                                    }
-                                    self.homeScreen.TimerMessage.text = "8:00:00"
-                                }
-                                else if (secondsSinceEpochInt - self.timer) < (8 * 3600) {
-                                    let remaining = 8 * 3600 - (secondsSinceEpochInt - self.timer)
-                                    let hour = remaining / 3600
-                                    let minutes = (remaining - (hour * 3600)) / 60
-                                    let seconds = (remaining - (hour * 3600) - (minutes * 60))
-                                    self.homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
-                                }
-                                else if (secondsSinceEpochInt - self.timer) > (8 * 3600) {
-                                    let remaining = 16 * 3600 - (secondsSinceEpochInt - self.timer - 8 * 3600)
-                                    let hour = remaining / 3600
-                                    let minutes = (remaining - (hour * 3600)) / 60
-                                    let seconds = (remaining - (hour * 3600) - (minutes * 60))
-                                    self.homeScreen.TimerMessage.text = "\(hour):\(minutes):\(seconds)"
-                                }
-                                
+                                let hour = remainingTime / 3600
+                                let minutes = (remainingTime % 3600) / 60
+                                let seconds = remainingTime % 60
+                                self.homeScreen.TimerMessage.text = String(format: "%02d:%02d:%02d", hour, minutes, seconds)
                             }
-                        } catch{
-                            print(error)
                         }
+                    } catch {
+                        print(error)
                     }
-                
-            }})
-        
-        
+                }
+            }
+        })
     }
+
     
     // MARK: Present alert...
     func presentAlert(title: String, message: String) {
